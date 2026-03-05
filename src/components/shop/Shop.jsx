@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router"
 import { useGetCategoriesQuery } from "../../services/categoriesApi"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Header from "../header/Header"
 import Footer from "../footer/Footer"
 import Loading from "../loading/Loading"
@@ -11,14 +11,8 @@ function Shop() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [showFilter, setShowFilter] = useState(true)
   const [showFilterMobile, setShowFilterMobile] = useState(false)
-  const [search, setSearch] = useState(searchParams.get("search") || "")
 
-  useEffect(() => {
-    const searchParam = searchParams.get("search")
-    if (searchParam) {
-      setSearch(searchParam)
-    }
-  }, [searchParams])
+  const search = searchParams.get("search") || ""
 
   const getCategoryName = () => {
     const categoryParam = searchParams.get('category')
@@ -51,7 +45,6 @@ function Shop() {
 
   const handleSearchChange = (e) => {
     const value = e.target.value
-    setSearch(value)
     if (value) {
       const currentParams = Object.fromEntries(searchParams)
       setSearchParams({ ...currentParams, search: value })

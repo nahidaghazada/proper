@@ -19,11 +19,13 @@ function ShopProduct({ showFilter, showFilterMobile, setShowFilterMobile, search
         page: currentPage,
         category: selectedCategoryIds.join(','),
         search: search
+    },{
+         refetchOnMountOrArgChange: true
     })
 
-    const filtered = products?.products?.filter((p) =>
-        p.title.toLowerCase().includes(search.toLowerCase())
-    )
+    // const filtered = products?.products?.filter((p) =>
+    //     p.title.toLowerCase().includes(search.toLowerCase())
+    // )
 
     useEffect(() => {
         const categoryParam = searchParams.get('category')
@@ -216,7 +218,7 @@ function ShopProduct({ showFilter, showFilterMobile, setShowFilterMobile, search
                         {isFetching ? (
                             <Loading />
                         ) : (
-                            (search ? filtered : products?.products)?.map((item) => (
+                            products?.products.map((item) => (
                                 <div key={item._id} 
                                     onClick={() => navigate(`/detail/${item.slug}/${item.variants?.[0]?.slug}`)}
                                     className="w-[calc(50%-0.5rem)] sm:w-[calc(33.333%-0.67rem)] lg:w-[calc(25%-0.75rem)] cursor-pointer rounded p-3 hover:shadow-lg transition-shadow">
@@ -233,7 +235,7 @@ function ShopProduct({ showFilter, showFilterMobile, setShowFilterMobile, search
                             ))
                         )}
                     </div>
-                    {(search ? filtered?.length === 0 : products?.products?.length === 0) && (
+                    {products?.products?.length === 0 && (
                         <div className="text-center py-12 text-gray-500">
                             <p className="text-lg mb-4">No items match your current selection</p>
                             <div className="flex gap-3 items-center justify-center">

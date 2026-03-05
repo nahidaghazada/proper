@@ -4,13 +4,18 @@ import { baseQuery } from "./baseQuery"
 export const productsApi = createApi({
   reducerPath: "productsApi",
   baseQuery,
+  keepUnusedDataFor: 0,
   endpoints: (builder) => ({
     getProducts: builder.query({
-      query: ({ limit = 10, page = 1, category } = {}) => {
+      query: ({ limit = 10, page = 1, category, search } = {}) => {
         let url = `/product?limit=${limit}&page=${page}`
         if (category) {
           url += `&categories=${category}`
         }
+        if(search) {
+          url += `&search=${search}`
+        }
+         console.log("API URL:", url)
         return url
       }
     }),

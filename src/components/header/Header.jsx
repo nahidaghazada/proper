@@ -75,8 +75,8 @@ function Header({ onClose }) {
         </div>
         <div className="flex items justify-end w-4/12 md:w-4/12 md:gap-6 lg:gap-8">
           <button className="hidden md:block"
-            onClick={() => setSearchOpen(true)}>
-            <IoSearchSharp className="text-[#fff] cursor-pointer" />
+            onClick={() => setSearchOpen(prev => !prev)} >
+            <IoSearchSharp className="text-[#fff] text-[20px] cursor-pointer" />
           </button>
           {user ? (
             <Link to="/account" className="hidden md:block">
@@ -93,7 +93,7 @@ function Header({ onClose }) {
         </div>
       </div>
       {sidebarOpen && (<ShopSidebar products={products} onClose={() => setSidebarOpen(false)} />)}
-        {searchOpen && <Search onClose={() => setSearchOpen(false)} />}
+      {searchOpen && <Search onClose={() => setSearchOpen(false)} />}
     </header>
   )
 }

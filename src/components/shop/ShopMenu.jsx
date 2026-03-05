@@ -11,21 +11,17 @@ function ShopMenu() {
 
   const handleSearch = (e) => {
     e.preventDefault()
-
     const currentCategory = searchParams.get("category")
-
     let params = {}
-
     if (searchTerm.trim()) {
       params.search = searchTerm
     }
-
     if (currentCategory) {
       params.category = currentCategory
     }
-
     const queryString = new URLSearchParams(params).toString()
     navigate(`/shop?${queryString}`)
+     setSearchTerm("")
   }
 
   return (
