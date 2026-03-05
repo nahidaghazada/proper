@@ -3,7 +3,7 @@ import { useGetCategoriesQuery } from "../../services/categoriesApi"
 import { Link, useNavigate, useSearchParams } from "react-router"
 import { useState } from "react"
 
-function ShopMenu() {
+function ShopMenu({onClose}) {
   const { data: categories } = useGetCategoriesQuery()
   const [searchTerm, setSearchTerm] = useState("")
   const navigate = useNavigate()
@@ -22,6 +22,7 @@ function ShopMenu() {
     const queryString = new URLSearchParams(params).toString()
     navigate(`/shop?${queryString}`)
      setSearchTerm("")
+     onClose?.()
   }
 
   return (
