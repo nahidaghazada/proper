@@ -6,7 +6,7 @@ function DetailComment({ productId }) {
     const [content, setContent] = useState("")
     const [page, setPage] = useState(1)
 
-    const { data, isLoading } = useGetCommentsQuery({ productId, page })
+    const { data } = useGetCommentsQuery({ productId, page })
     const [createComment, { isLoading: isAdding }] = useCreateCommentMutation()
 
     const handleAddComment = async () => {
@@ -29,14 +29,18 @@ function DetailComment({ productId }) {
                         className="w-full border-b-2 border-gray-300 bg-transparent py-2 focus:border-black outline-none transition" />
                 </div>
                 <button onClick={handleAddComment} disabled={isAdding}
-                    className="bg-black cursor-pointer text-[#fff] px-8 py-2 rounded-full text-sm font-bold hover:bg-gray-800 disabled:opacity-60">
+                    className="bg-black cursor-pointer text-[#fff] px-8 py-2 rounded-full text-sm font-bold hover:bg-gray-800 disabled:opacity-60 flex items-center gap-2">
+                    {isAdding && (
+                        <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                        </svg>
+                    )}
                     {isAdding ? "Adding..." : "Add"}
                 </button>
             </div>
 
-            {isLoading ? (
-                <p className="text-gray-400">Loading...</p>
-            ) : data?.comments?.length === 0 ? (
+            {data?.comments?.length === 0 ? (
                 <p className="text-gray-400 italic">There are no reviews yet. Be the first!</p>
             ) : (
                 <div className="flex flex-col gap-4">
