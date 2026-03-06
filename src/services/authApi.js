@@ -3,7 +3,14 @@ import ConfigObj from "../config/config"
 
 export const authApi = createApi({
     reducerPath: "authApi",
-    baseQuery: fetchBaseQuery({ baseUrl: ConfigObj.baseUrl }),
+    baseQuery: fetchBaseQuery({
+        baseUrl: ConfigObj.baseUrl,
+        prepareHeaders: (headers) => {
+            const token = localStorage.getItem("token")
+            if (token) headers.set("Authorization", `Bearer ${token}`)
+            return headers
+        }
+    }),
     endpoints: (builder) => ({
         login: builder.mutation({
             query: (body) => ({
@@ -42,8 +49,22 @@ export const authApi = createApi({
                 method: "POST",
                 body: { token, password },
             })
-        })
+        }),
+        updateProfile: builder.mutation({
+            query: (body) => ({
+                url: "/user/update",
+                method: "POST",
+                body,
+            })
+        }),
+        changePassword: builder.mutation({
+            query: (body) => ({
+                url: "/user/password",
+                method: "POST",
+                body,
+            })
+        }),
     }),
 })
 
-export const { useLoginMutation, useRegisterMutation, useResetPasswordMutation, useConfirmResetPasswordMutation } = authApi
+export const { useLoginMutation, useRegisterMutation, useResetPasswordMutation, useConfirmResetPasswordMutation, useUpdateProfileMutation, useChangePasswordMutation } = authApi

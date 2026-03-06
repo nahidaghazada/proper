@@ -20,28 +20,23 @@ function DetailProduct({ product, variant }) {
         }
         return (variant.price - variant.discount).toFixed(2)
     }
-
     const discountedPrice = getDiscountedPrice()
-
     const handleAddCart = () => {
         if (variant.stock < quantity) {
             toast.error("There are not enough products in stock.")
             return
         }
-
         const basket = JSON.parse(localStorage.getItem("cartItems") || "[]")
-
         const itemCart = basket.find(
             (item) => item.productId._id === product._id && item.variantId === variant._id
-        );
-
+        )
         if (itemCart) {
             const totalCount = itemCart.count + quantity;
             if (totalCount > variant.stock) {
                 toast.error(`Maksimum stok: ${variant.stock}. Səbətdə artıq ${itemCart.count} ədəd var.`)
                 return
             }
-            itemCart.count = totalCount;
+            itemCart.count = totalCount
         } else {
             const newItem = {
                 _id: Math.random().toString(36).substr(2, 9),
@@ -57,8 +52,8 @@ function DetailProduct({ product, variant }) {
             }
             basket.push(newItem)
         }
-
         localStorage.setItem("cartItems", JSON.stringify(basket))
+        window.dispatchEvent(new Event("cartUpdated"))
         toast.success("Product added to cart");
     }
 

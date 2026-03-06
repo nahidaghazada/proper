@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { FaRegUser, FaUserLarge } from "react-icons/fa6"
+import { FaUserLarge } from "react-icons/fa6"
 import { IoBag, IoSearchSharp } from "react-icons/io5"
 import { Link, useNavigate } from "react-router"
 import { getAllProducts } from "../../services/productServices"
@@ -15,6 +15,7 @@ function Header({ onClose }) {
   const navigate = useNavigate()
   const { user } = useSelector((state) => state.auth)
   const [searchOpen, setSearchOpen] = useState(false)
+  const [cartCount, setCartCount] = useState(0)
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -27,6 +28,21 @@ function Header({ onClose }) {
   useEffect(() => {
     document.body.style.overflow = showShopMenu ? 'hidden' : 'auto'
   }, [showShopMenu])
+
+  useEffect(() => {
+    const updateCount = () => {
+      const items = JSON.parse(localStorage.getItem("cartItems") || "[]")
+      const total = items.length
+      setCartCount(total)
+    }
+    updateCount()
+    window.addEventListener("cartUpdated", updateCount)
+    window.addEventListener("storage", updateCount)
+    return () => {
+      window.removeEventListener("cartUpdated", updateCount)
+      window.removeEventListener("storage", updateCount)
+    }
+  }, [])
 
   const handleShopClick = (e) => {
     e.preventDefault()
@@ -87,8 +103,13 @@ function Header({ onClose }) {
               <FaUserLarge className="text-[#fff] cursor-pointer" />
             </Link>
           )}
-          <button className="md:block" onClick={handleBagClick}>
+          <button className=" flex flex-row items-center" onClick={handleBagClick}>
             <IoBag className="text-[#fff] cursor-pointer" />
+            {cartCount > 0 && (
+              <span className="text-[#fff] text-[14px] font-medium ml-2">
+                {cartCount > 99 ? "99+" : cartCount}
+              </span>
+            )}
           </button>
         </div>
       </div>
