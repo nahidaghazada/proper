@@ -19,13 +19,9 @@ function ShopProduct({ showFilter, showFilterMobile, setShowFilterMobile, search
         page: currentPage,
         category: selectedCategoryIds.join(','),
         search: search
-    },{
-         refetchOnMountOrArgChange: true
+    }, {
+        refetchOnMountOrArgChange: true
     })
-
-    // const filtered = products?.products?.filter((p) =>
-    //     p.title.toLowerCase().includes(search.toLowerCase())
-    // )
 
     useEffect(() => {
         const categoryParam = searchParams.get('category')
@@ -207,26 +203,18 @@ function ShopProduct({ showFilter, showFilterMobile, setShowFilterMobile, search
                                 <button key={slug} onClick={() => removeCategory(slug, index)}
                                     className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 border-2 border-[#000] rounded-full text-sm hover:bg-gray-100 transition-colors">
                                     {slug}
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                                 </button>
                             ))}
                         </div>
                     )}
                     <div className="flex flex-wrap gap-4">
-                        {isFetching ? (
-                            <Loading />
-                        ) : (
+                        {isFetching ? (<Loading />) : (
                             products?.products.map((item) => (
-                                <div key={item._id} 
-                                    onClick={() => navigate(`/detail/${item.slug}/${item.variants?.[0]?.slug}`)}
+                                <div key={item._id} onClick={() => navigate(`/detail/${item.slug}/${item.variants?.[0]?.slug}`)}
                                     className="w-[calc(50%-0.5rem)] sm:w-[calc(33.333%-0.67rem)] lg:w-[calc(25%-0.75rem)] cursor-pointer rounded p-3 hover:shadow-lg transition-shadow">
-                                    <img
-                                        src={item.variants?.[0]?.images?.[0]?.url}
-                                        alt={item.title}
-                                        className="w-full h-[200px] object-cover rounded mb-2"
-                                    />
+                                    <img src={item.variants?.[0]?.images?.[0]?.url} alt={item.title}
+                                        className="w-full h-[200px] object-cover rounded mb-2" />
                                     <h3 className="mt-2 text-sm font-medium line-clamp-2">{item.title}</h3>
                                     <p className="text-gray-600 text-sm mt-1 font-semibold">
                                         {item.variants?.[0]?.price} $
@@ -250,7 +238,7 @@ function ShopProduct({ showFilter, showFilterMobile, setShowFilterMobile, search
                         </div>
                     )}
                     <div className="w-full mt-8 mb-4">
-                        <ShopPagination total={100} page={currentPage} limit={12} totalPages={2} onPageChange={setCurrentPage} />
+                        <ShopPagination page={currentPage} totalPages={Math.ceil((products?.total || 0) / limit) || 1} onPageChange={setCurrentPage} />
                     </div>
                 </div>
             </section>

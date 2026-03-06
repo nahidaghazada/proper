@@ -5,6 +5,7 @@ import { authApi } from "../services/authApi"
 import authReducer from "./slices/authSlice"
 import { tagApi } from "../services/tagApi"
 import { ordersApi } from "../services/orderApi"
+import { commentApi } from "../services/commentApi"
 
 const store = configureStore({
     reducer: {
@@ -13,7 +14,8 @@ const store = configureStore({
         [authApi.reducerPath]: authApi.reducer,
         [tagApi.reducerPath]: tagApi.reducer,
         auth: authReducer,
-         [ordersApi.reducerPath]: ordersApi.reducer
+         [ordersApi.reducerPath]: ordersApi.reducer,
+         [commentApi.reducerPath]: commentApi.reducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
@@ -22,6 +24,7 @@ const store = configureStore({
             .concat(authApi.middleware)
             .concat(tagApi.middleware)
             .concat(ordersApi.middleware)
+            .concat(commentApi.middleware)
 })
 
 export default store
