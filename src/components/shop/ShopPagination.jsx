@@ -1,12 +1,16 @@
+import { ssrModuleExportsKey } from "vite/module-runner"
+
 function ShopPagination({ page, totalPages, onPageChange }) {
   const handleChangePage = (newPage) => {
     onPageChange(newPage)
+    window.scrollTo({ top: 0, behavior: "smooth" })
   }
 
   const handlePlusMinus = (direction) => {
     const newPage = page + direction
     if (newPage >= 1 && newPage <= totalPages) {
       onPageChange(newPage)
+      window.scrollTo({ top: 0, behavior: "smooth" })
     }
   }
 
