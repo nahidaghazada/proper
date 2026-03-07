@@ -14,11 +14,11 @@ function ForgotPassword() {
     try {
       await resetPassword({ email }).unwrap()
       setMessageType("success")
-      setMessage("Şifrə sıfırlama linki emailinizə göndərildi! Emailinizi yoxlayın.")
+      setMessage("A password reset link has been sent to your email! Check your email.")
       setEmail("")
     } catch (err) {
       setMessageType("error")
-      setMessage(err?.data?.message || err?.message || "Email göndərilə bilmədi")
+      setMessage(err?.data?.message || err?.message || "Email could not be sent.")
     }
   }
 
@@ -27,9 +27,8 @@ function ForgotPassword() {
       <div className="max-w-[600px] w-full mx-auto bg-[#ffffffb3] py-4 rounded-md">
         <div className="max-w-[400px] mx-auto">
           <h2 className="text-center text-[#000] text-[24px] font-medium mb-4">Reset Password</h2>
-          <p className="text-[14px] text-center text-[#999] mb-6"> Email ünvanınızı daxil edin, sizə şifrə sıfırlama linki göndərəcəyik.</p>
+          <p className="text-[14px] text-center text-[#999] mb-6">Enter your email address and we will send you a password reset link.</p>
         </div>
-
         <div className="max-w-[400px] mx-auto rounded-md p-3">
           {message && (
             <div className={`mb-4 p-3 rounded-md text-center text-sm ${messageType === "success" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}>
@@ -62,7 +61,7 @@ function ForgotPassword() {
         <div className="py-2">
           <p className="text-center text-[#888] text-[12px]">
             <Link className="hover:underline" to={"/login"}>
-              ← Geri login səhifəsinə
+              ← Back to login page
             </Link>
           </p>
         </div>
