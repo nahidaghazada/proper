@@ -9,9 +9,7 @@ import Loading from "../loading/Loading"
 
 function Detail() {
   const { productSlug, slug } = useParams()
-  // const { data, isLoading, isFetching } = useGetProductsQuery({ limit: 100, page: 1 })
   const { data: detailProduct , isLoading , isFetching } = useGetProductBySlugQuery(productSlug)
-  console.log(detailProduct);
 
   if (isLoading || isFetching || !detailProduct) {
     return <Loading />

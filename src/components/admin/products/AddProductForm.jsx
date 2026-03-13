@@ -8,10 +8,8 @@ function AddProductForm({ onClose }) {
     const { data: tagsData } = useGetTagsQuery()
     const { data: categoriesData } = useGetCategoriesQuery()
     const [addProduct] = useAddProductMutation()
-
     const tags = tagsData || []
     const categories = categoriesData || []
-
     const [form, setForm] = useState({
         title: "", categories: "", tags: "", description: "", details: [], specs: [],
     })

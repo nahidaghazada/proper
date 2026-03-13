@@ -28,8 +28,7 @@ function CategoryEditModal({ isOpen, onClose, categoryId, categoryName }) {
     return (
         <>
             <section className={`fixed inset-0 z-[999] bg-black/50 flex justify-center items-center transition-all duration-300 ${isOpen ? "visible opacity-100" : "invisible opacity-0"}`}>
-                <div
-                    className={`bg-gray-600 p-4 rounded-md max-w-md w-full transition-all duration-300 ${isOpen ? "translate-y-0" : "-translate-y-full"}`}>
+                <div className={`bg-gray-600 p-4 rounded-md max-w-md w-full transition-all duration-300 ${isOpen ? "translate-y-0" : "-translate-y-full"}`}>
                     <div className="flex items-center justify-between border-b border-gray-500 pb-2 mb-4">
                         <p className="text-gray-50 text-lg font-medium">Edit Category</p>
                         <button onClick={onClose}>

@@ -19,8 +19,8 @@ function EditModal({ isOpen, onClose, product }) {
             toast.error(err?.data?.message || "Update error")
         }
     }
-
     if (!isOpen) return null
+    
     return (
         <div className="fixed flex justify-center items-center inset-0 z-[999] bg-black/60">
             <div className="bg-[#1e2433] max-w-xl w-full rounded-md py-5 px-6">
